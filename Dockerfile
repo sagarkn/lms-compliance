@@ -30,14 +30,14 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 COPY --from=builder /app/public/config.js /usr/share/nginx/html/config.js
 
 # Copy and set permissions for the entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY --from=builder /app/public/entrypoint.sh /usr/share/nginx/html/appentrypoint.sh
+RUN chmod +x /usr/share/nginx/html/entrypoint.sh
 
 # Expose the port Nginx will listen on
 EXPOSE 8080
 
 # Set the entrypoint script to run when the container starts
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/usr/share/nginx/html/entrypoint.sh"]
 
 # Start the application
 #CMD ["npm","run","dev"]
